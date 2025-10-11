@@ -231,18 +231,9 @@ if tmux new-session -d -s "$SESSION_NAME" "$CLAUDE_CMD" 2>/dev/null; then
     echo "  • Create new window:   ${CYAN}Ctrl+b, then c${NC}"
     echo ""
     
-    # Ask if user wants to attach immediately - FIXED FORMATTING
-    echo -e "${CYAN}Would you like to attach to the session now? [y/N]: ${NC}"
-    read -n 1 -r
-    echo ""
-    
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        print_message "$BLUE" "🔗 Attaching to session..."
-        tmux attach-session -t "$SESSION_NAME"
-    else
-        print_message "$GREEN" "✨ Session is running in the background."
-        print_message "$CYAN" "   To attach later, run: ${BOLD}tmux attach -t $SESSION_NAME${NC}"
-    fi
+    # Automatically attach to the session
+    print_message "$BLUE" "🔗 Attaching to session..."
+    tmux attach-session -t "$SESSION_NAME"
 else
     error_exit "Failed to create tmux session. Please check tmux installation and permissions."
 fi
